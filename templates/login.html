@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPE Login</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="login-box">
+    <img src="https://cdn-icons-png.flaticon.com/512/2942/2942924.png"
+         class="icon" alt="PPE icon">
+
+    <h2>PPE Monitor</h2>
+    <p class="subtitle">Safety first, Always</p>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <label for="username">Username</label>
+        {{ form.username(id="username") }}
+
+        <label for="password">Password</label>
+        {{ form.password(id="password") }}
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="footer">
+        <a href="{{ url_for('register') }}">Don't have an account? Register</a><br><br>
+        Carleton University
+    </div>
+</div>
+
+</body>
+</html>
