@@ -52,14 +52,14 @@ class LoginForm(FlaskForm):
 
 # HOME PAGE
 def home():
-    return render_template('home.html') # running content inside home.html
+    return redirect(url_for('login'))  # go straight to login page
 
 # LOGIN PAGE
 @app.route('/login',methods=['GET', 'POST']) #adds Url to the function for login
 def login():
     form=LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first() #checling for userid
+        user = User.query.filter_by(username=form.username.data).first() #checking for userid
         if user: 
             if bcrypt.check_password_hash(user.password, form.password.data): # checking if password matches
                 login_user(user) #lets user in
@@ -96,3 +96,5 @@ def register():
 
 if __name__ == '__main__':
     app.run(debug=True) #to catch errors
+
+ 
