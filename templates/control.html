@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PPE Monitoring Control</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header-row">
+        <h2>PPE Monitoring Control</h2>
+        <span class="system-status">
+            <span class="dot red"></span> System Offline
+        </span>
+    </div>
+
+    <p class="subtitle">Configure and activate safety monitoring</p>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Monitoring Duration</label>
+            <select>
+                <option>30 minutes</option>
+                <option>1 hour</option>
+                <option>2 hours</option>
+                <option>3 hours</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Laboratory Location</label>
+            <select>
+                <option>Chemistry Lab 101</option>
+                <option>Chemistry Lab 102</option>
+                <option>Chemistry Lab 103</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="settings-box">
+        <h3>PPE Detection Settings</h3>
+
+        <div class="toggle-row">
+            <span>Safety Goggles</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <span>Lab Coats</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <span>Safety Gloves</span>
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <button class="activate-btn">🚀 Activate Monitoring</button>
+
+</div>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+    <button class="nav-item active">🔧 Control</button>
+    <button class="nav-item">🚨 Alerts</button>
+    <button class="nav-item">⚙️ Settings</button>
+</div>
+
+</body>
+</html>

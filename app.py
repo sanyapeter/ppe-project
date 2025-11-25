@@ -1,18 +1,18 @@
-from flask import Flask, render_template, url_for, redirect
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, url_for, redirect # render_template displays HTML files for thr html folder
+from flask_sqlalchemy import SQLAlchemy # adds database to create tables,models, and to store user data
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm #to create html forms
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt #for passwpord hashing
 
 
 app = Flask(__name__)  # creating the web app
 
-# CONFIG MUST COME BEFORE db = SQLAlchemy(app)
+# Configuring the app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/sanya/ppe_app/database.db'# Stores all the data in database.db
 app.config['SECRET_KEY'] = "put_the_secret_key_here"
-bcrypt = Bcrypt(app)
+bcrypt = Bcrypt(app) # responsible for hashing passwords
 db = SQLAlchemy(app)  # creating a database for users
 
 login_manager = LoginManager()
@@ -21,8 +21,9 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id)) #return user object by id
+    return User.query.get(int(user_id)) #return user object by id 
 
+# BACKEND
 class User(db.Model, UserMixin):  # creating a table for users
     id = db.Column(db.Integer, primary_key=True)  # column for id
     username = db.Column(db.String(20), nullable=False,unique=True)  # column for username max 20, shouldnt be null, should be unique
@@ -63,14 +64,14 @@ def login():
         if user: 
             if bcrypt.check_password_hash(user.password, form.password.data): # checking if password matches
                 login_user(user) #lets user in
-                return redirect(url_for('dashboard')) #sends to dashboard
+                return redirect(url_for('control')) #sends to control
     return render_template('login.html',form=form) #runnning content inside login.html
 
-# DASHBOARD
-@app.route('/dashboard', methods=['GET', 'POST'])
-@login_required
-def dashboard():
-    return render_template('dashboard.html')
+#DASHBOARD
+@app.route('/control', methods=['GET', 'POST']) #URL
+@login_required #you need to login to acess dashboard
+def control():
+    return render_template('control.html')
 
 #LOGOUT
 @app.route('/logout', methods=['GET', 'POST'])
@@ -84,17 +85,13 @@ def logout():
 def register():
     form=RegisterForm()
     if form.validate_on_submit(): # validatiin when you submit
-        hashed_password = bcrypt.generate_password_hash(form.password.data) #creating a hashed passwprd
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8') #creating a hashed passwprd
         new_user = User(username=form.username.data, password=hashed_password) # creates new user using database
         db.session.add(new_user) # adds new user to the database
         db.session.commit() # savews the new user
         return redirect(url_for('login')) #once registration is successful redirects to login page
-
-    return render_template('register.html', form=form)
     return render_template('register.html',form=form) # running content inside register
 
 
 if __name__ == '__main__':
     app.run(debug=True) #to catch errors
-
- 
